@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>가</title>
+    <!-- <link href="c3/c3.css" rel="stylesheet"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- <script src="d3/d3.v5.min.js"></script>-->
+    <!--버전 6(최신)은 안됨...-->
+    <script src="c3/c3.js"></script>
+    <script src="main.js"></script>
+    
+</head>
+<body>
+    
+    <div id="chart"></div>
+
+    <script>
+        var bt=new Batry_Chart()
+        document.body.addEventListener('keyup',(e)=>{
+            console.log(e.key);
+            switch(e.key.toString()){
+                case 'ArrowDown':
+                    bt.zoom(0,-1);
+                    break;
+                case 'ArrowUp':
+                    bt.zoom(0,1)
+                    break;
+                case 'ArrowRight':
+                    bt.zoom(-1,0)
+                    break;
+                case 'ArrowLeft':
+                    bt.zoom(1,0)
+                    break;
+            }
+        })
+    </script>
+    →↓↑← 버튼으로 표현 범위를 조절할 수 있습니다.
+    <button onclick="bt.zoom(0,-1);">↓</button>
+    <button onclick="bt.zoom(0,1);">↑</button>
+    <button onclick="bt.zoom(-1,0);">→</button>
+    <button onclick="bt.zoom(1,0);">←</button>
+</body>
+</html>
