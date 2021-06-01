@@ -1,11 +1,19 @@
 const exec = require('child_process').exec;
 const fs = require("fs");
-const save_as_bp = require('./save_as_bp').save_as_bp;
-//save_as_bp(1,1);
-
 const cmd = 'WMIC PATH Win32_Battery Get EstimatedChargeRemaining'
-
 console.log('배터리 기록 시작')
+
+const save_as_bp = (num, pes)=>{
+    b=Buffer.alloc(8)
+    for (var i=0; i<6; i++){
+        b[5-i]=num&255;
+        num = Math.floor(num/(1<<8))
+    }
+    b[i]=pes;
+    b[7]=10;
+    return b;
+}
+//save_as_bp(1622194668171, 84)
 a = setInterval(() => {
     exec(cmd, {encoding: 'utf8'},(err,result,stderr) => {
         //console.log(result)
@@ -21,13 +29,13 @@ a = setInterval(() => {
     })
 }, 1000*60);
 
-
 const port = 81;
 const http = require('http')
 const server = http.createServer((req,res)=>{
     const url = req.url;
     const url_arr = req.url.split('/')
     const referer = req.headers.referer;
+    const ip = req.headers['x-forwarded-for'] ||  req.connection.remoteAddress
     
     function ok(xx){
     var a = ["\\",'//','"', "'", '<', '>', '?', '|', '*', '..', '%'];
@@ -35,7 +43,7 @@ const server = http.createServer((req,res)=>{
     return true;
     }
     
-    console.log('[request]', decodeURI(url), '[referer]', decodeURIComponent(referer))
+    console.log('[ip]',ip, '[referer]', decodeURIComponent(referer),'[request]', decodeURI(url))
     
     function fs_readfile(res, url, encode, file_type, callback){
         //console.log('fs_readfile', url)
@@ -60,7 +68,7 @@ const server = http.createServer((req,res)=>{
     
     
     function _404(res, url, err){
-        console.error('_404 fn err', url, err)
+        //console.error('_404 fn err', url, err)
         res.writeHead(404, {'Content-Type':'text/html; charset=utf-8'});
         res.end('404 Page Not Found');
     }
@@ -86,7 +94,7 @@ const server = http.createServer((req,res)=>{
         if(isNaN(start+end)) _404(res,url,'숫자가 아닌 값임.');
         else{
             let range_cmd = `.\\range.exe n ${start} ${end}`;
-            console.log(range_cmd);
+            //console.log(range_cmd);
             exec(range_cmd, {encoding: 'utf8'},(err,result,stderr) => {
                 console.log('range.exe 받은 길이,',result.length);
 

@@ -68,7 +68,7 @@ class Batry_Chart{
         x_path.setAttributeNS(null, 'd', dx);
         x_path.setAttributeNS(null, 'stroke', 'black');
         x_path.setAttributeNS(null, 'fill', 'none');
-        x_path.setAttributeNS(null, 'stroke-width', "1px");
+        x_path.setAttributeNS(null, 'stroke-width', "0.8px");
         this.chart.getElementsByClassName('x축')[0].appendChild(x_path);
 
         this.drow_x();
@@ -149,7 +149,7 @@ class Batry_Chart{
                         y_path.setAttributeNS(null, 'd', dy);
                         y_path.setAttributeNS(null, 'stroke', 'rgb(200, 200, 200)');
                         y_path.setAttributeNS(null, 'fill', 'none');
-                        y_path.setAttributeNS(null, 'stroke-width','1px');
+                        y_path.setAttributeNS(null, 'stroke-width','0.5px');
                         this.chart.getElementsByClassName('y축')[0].appendChild(y_path);
                     }
                     
@@ -190,7 +190,7 @@ class Batry_Chart{
             x_path.setAttributeNS(null, 'd', dx);
             x_path.setAttributeNS(null, 'stroke', 'rgb(200, 200, 200)');
             x_path.setAttributeNS(null, 'fill', 'none');
-            x_path.setAttributeNS(null, 'stroke-width','1px');
+            x_path.setAttributeNS(null, 'stroke-width','0.5px');
             this.chart.getElementsByClassName('y축')[0].appendChild(x_path);
 
             var text = document.createElementNS('http://www.w3.org/2000/svg', 'text');
