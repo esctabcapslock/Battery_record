@@ -7,8 +7,7 @@
 ## 구현
 ### 배터리잔량.js
 - node.js로 실행됨.
-- >WMIC PATH Win32_Battery Get EstimatedChargeRemaining
-- node.js에서 위 cmd 명령어를 이용해 현재 배터리 값을 받아옴.
+- node.js에서 ```WMIC PATH Win32_Battery Get EstimatedChargeRemaining``` cmd 명령어를 이용해 현재 배터리 값을 받아옴.
 - 이를 바이너리로 bt.dat에 저장한다.
 - 클라이언트의 요청이 있으면
 - 다시, bt_backup.dat의 파일을 range.exe를 통해 읽어 전송
