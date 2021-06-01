@@ -43,19 +43,38 @@ int main(int argc, char *argv[] ){ /// 입력은, 초단위로.... 500개 나눌
 
     int ps_min=INF, ps_max=-INF;
     long long int pt_min=-1, pt_max=-1;
+    long long int filelen = 0;
     char buffer[9];
     printf("[");
+    
+    //이진탐색 개념 넣기..
+    
+    fseek(fp, 0, SEEK_END);
+    filelen = ftell(fp) >>3 ;
+    if(is_print) printf("len %lld",filelen);
+    fseek(fp,0, SEEK_SET);
+    long long int s=0, e= filelen, f=0, v=start;
+    while((e-s)>1){
+        f=((e-s)>>1)+s;
+        if(is_print) printf("while binary %d, %d, %d\n",s,e,f);
+        fseek(fp, f<<3, SEEK_SET);
+        count = fread(buffer, sizeof(char), 8, fp);
+        k = hxstr2num(buffer);
+        if(k<=v) s=f;
+        else e=f;
+    }
+    fseek(fp, s<<3, SEEK_SET ); // 시작 위치로 버퍼 움직임.
+    
 
-    //이진탐색 개념 넣기...
+    
 
     while (feof(fp) == 0){
-        if(is_print) printf(">> cnt: %d\n",cnt);
+        //if(is_print) printf(">> cnt: %d\n",cnt);
 
         //if(is_print) printf("fp: %p %d\n",fp,feof(fp));
         count = fread(buffer, sizeof(char), 8, fp);
         size+=count;
-        if(is_print) printf("size:%d, fp: %p feof: %d, ferror:%d, count:%d\n",size, fp,feof(fp), ferror(fp), count); 
-        //printf("%d %d %d %d %d %d %d %d\n", buffer[0], buffer[1], buffer[2], buffer[3], buffer[4], buffer[5], buffer[6], buffer[7]);    // Hello, world!: 파일의 내용 출력
+        //if(is_print) printf("size:%d, fp: %p feof: %d, ferror:%d, count:%d\n",size, fp,feof(fp), ferror(fp), count); 
         k = hxstr2num(buffer); // 현재시각
         bt = buffer[6]; // 배터리양 
         //printf("big, %lld\n",k-start);
@@ -64,7 +83,7 @@ int main(int argc, char *argv[] ){ /// 입력은, 초단위로.... 500개 나눌
         if (k>=start && k<=end){ // 중간과정.
 
             ppre = ((k-start)*1200)/(end-start);
-            if(is_print) printf("pre: %lld, ppre: %lld k, %lld k-s %lld %lld e-s %lld %lld %lld\n",pre, ppre, k ,start, k-start, end, end-start,(k-start)*1200 );
+            //if(is_print) printf("pre: %lld, ppre: %lld k, %lld k-s %lld %lld e-s %lld %lld %lld\n",pre, ppre, k ,start, k-start, end, end-start,(k-start)*1200 );
 
             if(start_flag){
                 if(l_t) printf("[%lld,%d],",l_t,bt);
